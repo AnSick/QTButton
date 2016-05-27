@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Workspace\AppData\Local\Android\sdk1\extras\android\m2repository\com\android\support\support-annotations\23.3.0\support-annotations-23.3.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="db7791d75a07fef9844d06236c1c59ba7bf6997c">
+        <dex dex="C:\Workspace\QTButton\app\build\intermediates\pre-dexed\debug\support-annotations-23.3.0_2171981d748ef99a82019ece053ea6301b56c3d6.jar" />
+    </item>
+    <item
+        jar="C:\Workspace\QTButton\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="60a0f2267077389f25af30d4427720cb06f64949">
+        <dex dex="C:\Workspace\QTButton\app\build\intermediates\pre-dexed\debug\instant-run_ea1f0ec9a74750fc49f56a82b81ea328a2b2cc25.jar" />
+    </item>
+    <item
+        jar="C:\Workspace\QTButton\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="78160dab31f8d88aab280e91bb2be15e358beb90">
+        <dex dex="C:\Workspace\QTButton\app\build\intermediates\pre-dexed\debug\instant-run-bootstrap_fa127b9bc63b1e6cac4847a2e528d4fa2375ae62.jar" />
+    </item>
+    <item
+        jar="C:\Workspace\QTButton\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.3.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="23be6993826b8fd88bbc8d14928bb3b8960d3d4e">
+        <dex dex="C:\Workspace\QTButton\app\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-23.3.0_796aac184f184882c0e6870332d89c8be109e202.jar" />
+    </item>
+    <item
+        jar="C:\Workspace\QTButton\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.3.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="a0b5d60246cd9d4f3f2443611b3b4c25265840b5">
+        <dex dex="C:\Workspace\QTButton\app\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-23.3.0_107fd3b0f7465af2e6172bc032fd620fa828d0ab.jar" />
+    </item>
+    <item
+        jar="C:\Workspace\QTButton\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.3.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="1b8e03daaa43fb0a4cd57e378167c2fd70454c1e">
+        <dex dex="C:\Workspace\QTButton\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-23.3.0_d384876536d63d449b5755b829acccd2e0607c2b.jar" />
+    </item>
+    <item
+        jar="C:\Workspace\QTButton\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.3.0\jars\libs\internal_impl-23.3.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="4da5a4d697d32497c6f85567a5112e62fdfd0676">
+        <dex dex="C:\Workspace\QTButton\app\build\intermediates\pre-dexed\debug\internal_impl-23.3.0_920d5c53f98eaa3ad6fbc0fa62c0ede094d87cc5.jar" />
+    </item>
+    <item
+        jar="C:\Workspace\QTButton\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.3.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="8a034dd16c0dfd75fe86c52c2cd581592acc684a">
+        <dex dex="C:\Workspace\QTButton\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-23.3.0_3659eb2c96f6ed96cde86560e8a8dc8cc91655e9.jar" />
+    </item>
+
+</items>
