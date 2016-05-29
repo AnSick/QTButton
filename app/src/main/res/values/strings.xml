@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">QTButton</string>
+    <string name="numberHint">Your number</string>
+    <string name="passwordHint">Password</string>
+    <string name="forgetPasswordHint">Forget password</string>
+    <string name="forgetPasswordLink">http://sjdalksdjasldk.xcom/</string>
 </resources>
