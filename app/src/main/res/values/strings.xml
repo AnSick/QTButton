@@ -4,4 +4,5 @@
     <string name="passwordHint">Password</string>
     <string name="forgetPasswordHint">Forget password</string>
     <string name="forgetPasswordLink">http://sjdalksdjasldk.xcom/</string>
+    <string name="nameHint">Your name</string>
 </resources>
