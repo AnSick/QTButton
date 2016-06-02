@@ -5,6 +5,7 @@ import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
+import org.ksoap2.transport.HttpTransportSE;
 //import org.ksoap2.transport.HttpTransportSE;
 
 import android.content.Intent;
@@ -58,10 +59,19 @@ public class LoginPage extends AppCompatActivity {
 
                 @Override
                 public void run() {
-                 /*   SoapObject Request = new SoapObject(NAMESPACE, SOAP_METHOD_NAME);
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast toast = Toast.makeText(getApplicationContext(),
+                                    "Incorrect number or password!",
+                                    Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        }
+                    });
+                    SoapObject Request = new SoapObject(NAMESPACE, SOAP_METHOD_NAME);
                     Request.addProperty("tel", numberField);
                     Request.addProperty("pass", passwordField);
-                    SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER12);
+                    SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
                     soapEnvelope.dotNet = true;
 
                     soapEnvelope.setAddAdornments(false);
@@ -69,9 +79,9 @@ public class LoginPage extends AppCompatActivity {
                     soapEnvelope.env = SoapSerializationEnvelope.ENV;
                     soapEnvelope.implicitTypes = true;
                     soapEnvelope.setOutputSoapObject(Request);
-*/
+
                     boolean result = false;
-                /*    HttpTransportSE aht = new HttpTransportSE(URL);
+                    HttpTransportSE aht = new HttpTransportSE(URL);
                     aht.debug = true;
 
                 try {
@@ -80,13 +90,14 @@ public class LoginPage extends AppCompatActivity {
                    // SoapObject result =(SoapObject) soapEnvelope.bodyIn;
                     //TODO: appropriate parsing and processing routine for resultString
                     Log.i("Check_Soap_Service", "resultString -  " + resultString);
-                    result = Boolean.getBoolean((((SoapPrimitive) soapEnvelope.getResponse()).getAttribute("AuthInResponse").toString()));
+                    result = Boolean.getBoolean((((SoapPrimitive) soapEnvelope.getResponse()).toString()));
                 } catch (Exception e) {
                     Log.i("Check_Soap_Service", "Exception : " + e.toString());
-                } */
-
+                }
+/*
                     Stubber stub = new Stubber();
                     result = stub.loginStub(numberField, passwordField);
+*/
                     if (result == true) {
                         Intent intent = new Intent(LoginPage.this, ListsPage.class);
                         startActivity(intent);
