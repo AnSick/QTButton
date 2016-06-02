@@ -80,7 +80,7 @@ public class LoginPage extends AppCompatActivity {
                     soapEnvelope.implicitTypes = true;
                     soapEnvelope.setOutputSoapObject(Request);
 
-                    boolean result = false;
+                    String result = "false";
                     HttpTransportSE aht = new HttpTransportSE(URL);
                     aht.debug = true;
 
@@ -91,17 +91,18 @@ public class LoginPage extends AppCompatActivity {
                     //TODO: appropriate parsing and processing routine for resultString
                     //Log.i("Check_Soap_Service", "resultString -  " + resultString);
                     // result = Boolean.getBoolean((((SoapPrimitive) soapEnvelope.getResponse()).toString()));
-                    result = Boolean.getBoolean(resultString.toString());
+                    result = resultString.toString();
                     System.out.println(result);
                 } catch (Exception e) {
                     Log.i("Check_Soap_Service", "Exception : " + e.toString());
-                    result = false;
+                    result = "false";
                 }
+
 /*
                     Stubber stub = new Stubber();
                     result = stub.loginStub(numberField, passwordField);
 */
-                    if (result == true) {
+                    if (result.equals("true")) {
                         Intent intent = new Intent(LoginPage.this, ListsPage.class);
                         startActivity(intent);
                     } else {
