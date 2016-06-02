@@ -21,7 +21,7 @@
         android:layout_marginTop="131dp" />
 
     <EditText
-        android:id="@+id/numberRegistration"
+        android:id="@+id/et_numberRegistration"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:hint="@string/numberHint"
@@ -32,24 +32,24 @@
         android:layout_alignParentStart="true" />
 
     <EditText
-        android:id="@+id/passwordField"
+        android:id="@+id/et_passwordRegistration"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:hint="@string/passwordHint"
         android:inputType="textPassword"
         android:textAlignment="center"
-        android:layout_below="@+id/nameField"
+        android:layout_below="@+id/et_nameRegistration"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <EditText
-        android:id="@+id/nameField"
+        android:id="@+id/et_nameRegistration"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:hint="@string/nameHint"
         android:inputType="text"
         android:textAlignment="center"
-        android:layout_below="@+id/numberRegistration"
+        android:layout_below="@+id/et_numberRegistration"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -58,10 +58,11 @@
         android:layout_height="wrap_content"
         android:text="Submit"
         android:id="@+id/button4"
-        android:layout_below="@+id/passwordField"
+        android:layout_below="@+id/et_passwordRegistration"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="41dp"
         android:clickable="true"
-        android:enabled="true" />
+        android:enabled="true"
+        android:onClick="registration" />
 
 </RelativeLayout>

@@ -59,15 +59,6 @@ public class LoginPage extends AppCompatActivity {
 
                 @Override
                 public void run() {
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            Toast toast = Toast.makeText(getApplicationContext(),
-                                    "Incorrect number or password!",
-                                    Toast.LENGTH_LONG);
-                            toast.setGravity(Gravity.CENTER, 0, 0);
-                            toast.show();
-                        }
-                    });
                     SoapObject Request = new SoapObject(NAMESPACE, SOAP_METHOD_NAME);
                     Request.addProperty("tel", numberField);
                     Request.addProperty("pass", passwordField);
