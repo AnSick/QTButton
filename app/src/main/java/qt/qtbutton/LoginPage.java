@@ -89,10 +89,13 @@ public class LoginPage extends AppCompatActivity {
                     SoapPrimitive resultString = (SoapPrimitive) soapEnvelope.getResponse();
                    // SoapObject result =(SoapObject) soapEnvelope.bodyIn;
                     //TODO: appropriate parsing and processing routine for resultString
-                    Log.i("Check_Soap_Service", "resultString -  " + resultString);
-                    result = Boolean.getBoolean((((SoapPrimitive) soapEnvelope.getResponse()).toString()));
+                    //Log.i("Check_Soap_Service", "resultString -  " + resultString);
+                    // result = Boolean.getBoolean((((SoapPrimitive) soapEnvelope.getResponse()).toString()));
+                    result = Boolean.getBoolean(resultString.toString());
+                    System.out.println(result);
                 } catch (Exception e) {
                     Log.i("Check_Soap_Service", "Exception : " + e.toString());
+                    result = false;
                 }
 /*
                     Stubber stub = new Stubber();
