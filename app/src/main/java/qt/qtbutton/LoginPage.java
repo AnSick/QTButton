@@ -94,6 +94,8 @@ public class LoginPage extends AppCompatActivity {
                     result = stub.loginStub(numberField, passwordField);
 */
                     if (result.equals("true")) {
+                        Global.tel = numberField;
+                        Global.pass = passwordField;
                         Intent intent = new Intent(LoginPage.this, ListsPage.class);
                         startActivity(intent);
                     } else {

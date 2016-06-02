@@ -22,4 +22,11 @@
         app:headerLayout="@layout/nav_header_group_list_page"
         app:menu="@menu/activity_group_list_page_drawer" />
 
+    <ListView
+        android:id="@+id/navList"
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left|start"
+        android:background="#ffeeeeee" />
+
 </android.support.v4.widget.DrawerLayout>
