@@ -30,10 +30,11 @@ public class ListsPage extends AppCompatActivity {
     ArrayList<String> lists = new ArrayList<String>();
     ArrayList<String> result = new ArrayList<String>();
     ArrayList<String> listsResult = new ArrayList<String>();
-    ArrayList<Integer> ids = new ArrayList<Integer>();
+    public static ArrayList<Integer> ids = new ArrayList<Integer>();
     private static final String SOAP_ACTION = "http://tempuri.org/IService1/GetActiveLists";
     private static final String SOAP_METHOD_NAME = "GetActiveLists";
-    private static final String URL = "http://91.122.171.34:25565/Design_Time_Addresses/WcfServiceLibrary1/Service1";
+    //  private static final String URL = "http://91.122.171.34:25565/Design_Time_Addresses/WcfServiceLibrary1/Service1";
+    private static final String URL = Global.URL;
     private static final String NAMESPACE = "http://tempuri.org/";
 
     @Override
@@ -52,7 +53,7 @@ public class ListsPage extends AppCompatActivity {
 
         // присваиваем адаптер списку
         lvMain.setAdapter(adapter);
-
+        //  adapter.getPosition(lists.);
     }
 
     public ArrayList<String> getListNames() {
@@ -96,7 +97,7 @@ public class ListsPage extends AppCompatActivity {
                     StringTokenizer str = new StringTokenizer(result.get(i), "+");
                     Integer id;
                     id = Integer.valueOf(str.nextToken());
-
+                    ids.add(id);
                     String name = str.nextToken();
 
                     listsResult.add(name);

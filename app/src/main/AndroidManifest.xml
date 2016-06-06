@@ -29,7 +29,9 @@
         <activity
             android:name=".GroupListPage"
             android:label="@string/title_activity_group_list_page"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AddNewList" />
+        <activity android:name=".AddListLines"></activity>
     </application>
 
 </manifest>
