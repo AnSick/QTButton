@@ -29,7 +29,7 @@ public class AddNewList extends AppCompatActivity {
         setContentView(R.layout.activity_add_new_list);
     }
 
-    public void createNewList() {
+    public void createNewList(View view) {
         final String SOAP_ACTION = "http://tempuri.org/IService1/AddList";
         final String SOAP_METHOD_NAME = "AddList";
         final String NAMESPACE = "http://tempuri.org/";
@@ -58,13 +58,20 @@ public class AddNewList extends AppCompatActivity {
                 Integer result = 0;
                 try {
                     aht.call(SOAP_ACTION, soapEnvelope);
-                    result = Integer.getInteger((((SoapPrimitive) soapEnvelope.getResponse()).toString()));
-
+                    // result = Integer.getInteger((((SoapPrimitive) soapEnvelope.getResponse()).toString()));
+                    SoapPrimitive responseObject = (SoapPrimitive) soapEnvelope.getResponse();
+                    if (responseObject == null) {
+                        System.out.println("HELP IM NULL SAVE ME MOMMY");
+                    } else {
+                        String str = responseObject.toString();
+                        result = Integer.valueOf(str);
+                        System.out.println(result);
+                    }
                 } catch (Exception e) {
                     Log.i("Check_Soap_Service", "Exception : " + e.toString());
                     // result = "";
                 }
-                if (result != 0) {
+                if ((result != null) && (result != 0)) {
                     Intent intent = new Intent(AddNewList.this, AddListLines.class);
                     intent.putExtra("listId", result);
                     startActivity(intent);

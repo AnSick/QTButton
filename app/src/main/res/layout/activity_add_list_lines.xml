@@ -28,7 +28,7 @@
         android:layout_weight="1" />
 
     <EditText
-        android:layout_width="150dp"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:id="@+id/et_newProduct"
         android:layout_alignTop="@+id/et_numberOfProduct"
@@ -40,7 +40,7 @@
 
     <EditText
         android:id="@+id/et_numberOfProduct"
-        android:layout_width="80dp"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="@+id/et_newProduct"
@@ -50,7 +50,7 @@
         android:singleLine="true" />
 
     <Spinner
-        android:layout_width="50dp"
+        android:layout_width="30dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:id="@+id/spinner"

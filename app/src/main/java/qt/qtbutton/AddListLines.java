@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -28,7 +29,7 @@ public class AddListLines extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_list_lines);
-        listId = Integer.valueOf(getIntent().getExtras().getString("listId"));
+        listId = getIntent().getExtras().getInt("listId");
         ListView lvMain = (ListView) findViewById(R.id.productListView);
         lists = getLines();
         // создаем адаптер
@@ -39,7 +40,7 @@ public class AddListLines extends AppCompatActivity {
 
     }
 
-    public void createNewLine() {
+    public void createNewLine(View view) {
         final String SOAP_ACTION = "http://tempuri.org/IService1/AddListLine";
         final String SOAP_METHOD_NAME = "AddListLine";
         final String NAMESPACE = "http://tempuri.org/";
@@ -68,14 +69,17 @@ public class AddListLines extends AppCompatActivity {
                 Integer lineId = 0;
                 try {
                     aht.call(SOAP_ACTION, soapEnvelope);
-                    lineId = Integer.getInteger((((SoapPrimitive) soapEnvelope.getResponse()).toString()));
-
+                    SoapPrimitive responseObject = (SoapPrimitive) soapEnvelope.getResponse();
+                    String str = responseObject.toString();
+                    System.out.println(str);
+                    lineId = Integer.valueOf(str);
+                    System.out.println(lineId);
                 } catch (Exception e) {
                     Log.i("Check_Soap_Service", "Exception : " + e.toString());
                     // result = "";
                 }
                 if (lineId != 0) {
-                    addInfoToLine(lineId);
+                    addInfoToLine(lineId, productName);
                 }
             }
 
@@ -83,12 +87,13 @@ public class AddListLines extends AppCompatActivity {
 
     }
 
-    public void addInfoToLine(Integer lineId) {
+    public void addInfoToLine(Integer lineId, String productForLine) {
         final String SOAP_ACTION = "http://tempuri.org/IService1/UpdateListLines";
         final String SOAP_METHOD_NAME = "UpdateListLines";
         final String NAMESPACE = "http://tempuri.org/";
         final String URL = Global.URL;
         final Integer line = lineId;
+        final String productLine = productForLine;
 
         new Thread(new Runnable() {
 
@@ -96,6 +101,7 @@ public class AddListLines extends AppCompatActivity {
             public void run() {
                 //EditText et_productName = (EditText) findViewById(R.id.et_newProduct);
                 //String productName = String.valueOf(et_productName.getText());
+                System.out.println("I AM UPDATING OUR FUCKING LINE");
                 EditText et_numberOfProduct = (EditText) findViewById(R.id.et_numberOfProduct);
                 String numberOfProduct = String.valueOf(et_numberOfProduct.getText());
                 Spinner spinner = (Spinner) findViewById(R.id.spinner);
@@ -104,10 +110,10 @@ public class AddListLines extends AppCompatActivity {
                 Request.addProperty("tel", Global.tel);
                 Request.addProperty("pass", Global.pass);
                 Request.addProperty("listLineId", line);
-                // Request.addProperty("product", productName);
+                Request.addProperty("productName", productLine);
                 Request.addProperty("count", numberOfProduct);
                 Request.addProperty("measureTypeName", category);
-                // Request.addProperty("comment", "");
+                Request.addProperty("comment", "hello");
                 // Request.addProperty("isBought", 0);
                 SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
                 soapEnvelope.dotNet = true;
@@ -191,7 +197,7 @@ public class AddListLines extends AppCompatActivity {
         return lists;
     }
 
-    public void createListFinal() {
+    public void createListFinal(View view) {
         Intent intent = new Intent(AddListLines.this, ListsPage.class);
         startActivity(intent);
     }
