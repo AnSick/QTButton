@@ -5,5 +5,5 @@ package qt.qtbutton;
  */
 public class Global {
     public static String tel, pass;
-    public static String URL = "http://91.122.171.56:25565/Design_Time_Addresses/WcfServiceLibrary1/Service1";
+    public static String URL = "http://91.122.175.120:25565/Design_Time_Addresses/WcfServiceLibrary1/Service1";
 }
