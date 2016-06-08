@@ -16,6 +16,7 @@
 
         <EditText
             android:id="@+id/et_listName"
+            android:hint="Enter list name"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="#AFEEEE"
@@ -28,6 +29,7 @@
 
             <EditText
                 android:id="@+id/friend_in_list"
+                android:hint="Friends coming next"
                 android:layout_width="224dp"
                 android:layout_height="36dp"
                 android:background="#AFEEEE"
@@ -50,7 +52,7 @@
             android:layout_below="@+id/listView"
             android:layout_centerHorizontal="true"
             android:layout_weight="0"
-            android:text="ADD"
+            android:text="CREATE"
             android:onClick="createNewList" />
     </TableLayout>
 </RelativeLayout>
