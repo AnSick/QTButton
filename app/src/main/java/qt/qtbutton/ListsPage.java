@@ -102,12 +102,6 @@ public class ListsPage extends AppCompatActivity {
 
                     listsResult.add(name);
                 }
-
-/*
-                    Stubber stub = new Stubber();
-                    result = stub.loginStub(numberField, passwordField);
-*/
-
             }
         }).start();
 

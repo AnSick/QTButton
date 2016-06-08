@@ -21,8 +21,7 @@ import java.util.StringTokenizer;
 
 public class AddListLines extends AppCompatActivity {
     public static ArrayList<String> lists = new ArrayList<String>();
-    public static ArrayList<String> result = new ArrayList<String>();
-
+    //   public static ArrayList<String> result = new ArrayList<String>();
     public static int listId;
 
     @Override
@@ -31,12 +30,17 @@ public class AddListLines extends AppCompatActivity {
         setContentView(R.layout.activity_add_list_lines);
         listId = getIntent().getExtras().getInt("listId");
         ListView lvMain = (ListView) findViewById(R.id.productListView);
-        lists = getLines();
+
         // создаем адаптер
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 R.layout.product_line, R.id.productInfo, lists);
+
         // присваиваем адаптер списку
         lvMain.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+        lvMain.invalidateViews();
+        lvMain.refreshDrawableState();
+        lists = getLines();
 
     }
 
@@ -135,10 +139,11 @@ public class AddListLines extends AppCompatActivity {
             }
 
         }).start();
+        lists = getLines();
         Intent intent = new Intent(AddListLines.this, AddListLines.class);
         intent.putExtra("listId", listId);
         startActivity(intent);
-        // setContentView(R.layout.activity_add_list_lines);
+
     }
 
     public ArrayList<String> getLines() {
@@ -146,6 +151,8 @@ public class AddListLines extends AppCompatActivity {
         final String SOAP_METHOD_NAME = "GetListLines";
         final String NAMESPACE = "http://tempuri.org/";
         final String URL = Global.URL;
+        final ArrayList<String> localLines = new ArrayList<String>();
+        final ArrayList<String> result = new ArrayList<>();
         new Thread(new Runnable() {
 
             @Override
@@ -188,13 +195,14 @@ public class AddListLines extends AppCompatActivity {
                     String wholeLine = str.nextToken() + "  " + str.nextToken() + "  " + str.nextToken();
 
 
-                    lists.add(wholeLine);
+                    // lists.add(wholeLine);
+                    localLines.add(wholeLine);
                 }
 
             }
         }).start();
 
-        return lists;
+        return localLines;
     }
 
     public void createListFinal(View view) {
@@ -202,4 +210,19 @@ public class AddListLines extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void refresh(View view) {          //refresh is onClick name given to the button
+        createNewLine(view);
+        onRestart();
+    }
+
+    @Override
+    protected void onRestart() {
+
+        // TODO Auto-generated method stub
+        super.onRestart();
+        Intent i = new Intent(AddListLines.this, AddListLines.class);  //your class
+        startActivity(i);
+        finish();
+
+    }
 }
