@@ -17,6 +17,16 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="45dp"
+        android:layout_weight="1" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#12808E"
+        android:id="@+id/deactivatedListView"
+        android:layout_below="@id/mainListView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_marginBottom="70dp"
         android:layout_weight="1" />
 </RelativeLayout>

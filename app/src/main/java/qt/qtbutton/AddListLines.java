@@ -147,8 +147,8 @@ public class AddListLines extends AppCompatActivity {
     }
 
     public ArrayList<String> getLines() {
-        final String SOAP_ACTION = "http://tempuri.org/IService1/GetListLines";
-        final String SOAP_METHOD_NAME = "GetListLines";
+        final String SOAP_ACTION = "http://tempuri.org/IService1/GetNotBoughtListLines";
+        final String SOAP_METHOD_NAME = "GetNotBoughtListLines";
         final String NAMESPACE = "http://tempuri.org/";
         final String URL = Global.URL;
         final ArrayList<String> localLines = new ArrayList<String>();
