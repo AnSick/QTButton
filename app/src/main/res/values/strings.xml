@@ -7,9 +7,12 @@
     <string name="nameHint">Your name</string>
     <string name="title_activity_group_list_page">GroupListPage</string>
 
+    <string name="NavigationMenuList">Списки</string>
+    <string name="NavigationMenuFriends">Друзья</string>
+    <string name="NavigationMenuGroups">Группы</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="action_settings">Settings</string>
 
     <string-array name="measure">

@@ -1,16 +1,20 @@
 package qt.qtbutton;
 
 import android.content.Intent;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
@@ -23,13 +27,23 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import qt.qtbutton.model.ListItem;
-
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.support.design.widget.NavigationView;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.Toast;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 
 /**
  * Created by Anna on 01.06.2016.
  * Edited by Nadya on 02.06.2016
  */
-public class ListsPage extends AppCompatActivity {
+public class ListsPage extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
     ArrayList<String> lists = new ArrayList<String>();
     ArrayList<String> result = new ArrayList<String>();
     List<ListItem> listsResult = new ArrayList<>();
@@ -40,12 +54,26 @@ public class ListsPage extends AppCompatActivity {
     private static final String URL = Global.URL;
     private static final String NAMESPACE = "http://tempuri.org/";
     public ArrayAdapter<String> adapter;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lists);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close );
+        if (drawerLayout != null) {
+            drawerLayout.addDrawerListener(mDrawerToggle);
+        }
+        mDrawerToggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        if (navigationView != null) {
+            navigationView.setNavigationItemSelectedListener(this);
+        }
         // находим список
         ListView lvMain = (ListView) findViewById(R.id.listView);
 
@@ -76,6 +104,35 @@ public class ListsPage extends AppCompatActivity {
         });
         //  adapter.getPosition(lists.);
 
+    }
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer != null) {
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            } else {
+                super.onBackPressed();
+            }
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        Toast.makeText(getApplicationContext(), item.getTitle().toString(), Toast.LENGTH_SHORT).show();
+
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawerLayout != null) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+
+        return true;
     }
 
     public List<ListItem> getListNames() {
