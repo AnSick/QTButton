@@ -3,8 +3,10 @@ package qt.qtbutton;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -41,7 +43,7 @@ public class ListPage extends AppCompatActivity {
 
         // создаем адаптер
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                R.layout.product_line, R.id.productInfo, lists);
+                R.layout.list_product_line, R.id.productFullLine, lists);
         ArrayAdapter<String> adapterDeactivated = new ArrayAdapter<String>(this,
                 R.layout.product_line, R.id.productInfo, listsDeactivated);
 
@@ -54,7 +56,17 @@ public class ListPage extends AppCompatActivity {
         adapterDeactivated.notifyDataSetChanged();
         lvDeactivated.invalidateViews();
         lvDeactivated.refreshDrawableState();
+        lvMain.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View view,
+                                           int pos, long id) {
+                // TODO Auto-generated method stub
 
+                Log.v("long clicked", "pos: " + pos);
+                onLineLongClick(view);
+                return true;
+            }
+        });
         //   adapter.notifyDataSetChanged();
         // lvMain.invalidateViews();
         // lvMain.refreshDrawableState();
@@ -73,6 +85,12 @@ public class ListPage extends AppCompatActivity {
         }
         //  lists = getLines();
         //    listsDeactivated=getDeactivatedLines();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ListPage.this, ListsPage.class);
+        startActivity(intent);
     }
 
     public List<ProductLine> getLines() {
@@ -217,4 +235,115 @@ public class ListPage extends AppCompatActivity {
         return listsDeactivatedLines;
     }
 
+    public void onLineClick(View view) {
+        System.out.println("I entered onLineClick");
+        if (view instanceof AppCompatTextView) {
+            AppCompatTextView textView = (AppCompatTextView) view;
+            String name = textView.getText().toString();
+            int localId = -1;
+            String localProduct;
+            int localNumber;
+            String localCategory;
+            Log.i("", "clickedOn:    " + name);
+            for (ProductLine result : listsLines) {
+                String superline = result.getProduct() + " " + result.getNumberOfProduct() + " " + result.getCategory();
+                if (superline.equals(name)) {
+                    localId = result.getId();
+                    localProduct = result.getProduct();
+                    localCategory = result.getCategory();
+                    localNumber = result.getNumberOfProduct();
+                    break;
+                }
+            }
+            if (localId != -1) {
+                makeInactive(localId);
+                System.out.println("Making inactive" + localId);
+            }
+        }
+    }
+
+    public void makeInactive(int lineId) {
+        final String SOAP_ACTION = "http://tempuri.org/IService1/ListLinesBought";
+        final String SOAP_METHOD_NAME = "ListLinesBought";
+        final String NAMESPACE = "http://tempuri.org/";
+        final String URL = Global.URL;
+        final int ourId = lineId;
+        Thread threadMakeInactive =
+                new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        SoapObject Request = new SoapObject(NAMESPACE, SOAP_METHOD_NAME);
+                        Request.addProperty("tel", Global.tel);
+                        Request.addProperty("pass", Global.pass);
+                        Request.addProperty("listLineId", ourId);
+                        Request.addProperty("isBought", true);
+                        SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+                        soapEnvelope.dotNet = true;
+
+                        soapEnvelope.setAddAdornments(false);
+                        soapEnvelope.encodingStyle = SoapSerializationEnvelope.ENC;
+                        soapEnvelope.env = SoapSerializationEnvelope.ENV;
+                        soapEnvelope.implicitTypes = true;
+                        soapEnvelope.setOutputSoapObject(Request);
+                        HttpTransportSE aht = new HttpTransportSE(URL);
+                        aht.debug = true;
+                        try {
+                            aht.call(SOAP_ACTION, soapEnvelope);
+                            SoapPrimitive resultString = (SoapPrimitive) soapEnvelope.getResponse();
+                            // SoapObject result =(SoapObject) soapEnvelope.bodyIn;
+                            //TODO: appropriate parsing and processing routine for resultString
+                            //Log.i("Check_Soap_Service", "resultString -  " + resultString);
+                            // result = Boolean.getBoolean((((SoapPrimitive) soapEnvelope.getResponse()).toString()));
+                            //   SoapObject resultString = (SoapObject) soapEnvelope.getResponse();
+                        } catch (Exception e) {
+                            Log.i("Check_Soap_Service", "Exception : " + e.toString());
+                            // result = "";
+                        }
+
+
+                    }
+                }
+                );
+        threadMakeInactive.start();
+        try {
+            threadMakeInactive.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Intent intent = new Intent(ListPage.this, ListPage.class);
+        intent.putExtra("listId", listId);
+        startActivity(intent);
+
+    }
+
+    public void onLineLongClick(View view) {
+        if (view instanceof AppCompatTextView) {
+            AppCompatTextView textView = (AppCompatTextView) view;
+            String name = textView.getText().toString();
+            int localId = -1;
+            String localProduct;
+            int localNumber;
+            String localCategory;
+            Log.i("", "clickedOn:    " + name);
+            for (ProductLine result : listsLines) {
+                String superline = result.getProduct() + " " + result.getNumberOfProduct() + " " + result.getCategory();
+                if (superline.equals(name)) {
+                    localId = result.getId();
+                    localProduct = result.getProduct();
+                    localCategory = result.getCategory();
+                    localNumber = result.getNumberOfProduct();
+                    break;
+                }
+            }
+            if (localId != -1) {
+                Intent intent = new Intent(ListPage.this, ListPage.class);
+                intent.putExtra("lineId", localId);
+                
+
+                startActivity(intent);
+
+            }
+        }
+    }
 }
