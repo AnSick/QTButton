@@ -54,7 +54,7 @@
         android:singleLine="true" />
 
     <Spinner
-        android:layout_width="30dp"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:id="@+id/spinnerAtList"
@@ -65,7 +65,7 @@
         android:layout_toEndOf="@+id/et_numberOfProductAtList" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:text="ADD"
         android:id="@+id/btn_addItemAtList"
