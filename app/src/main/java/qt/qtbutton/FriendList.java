@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -23,8 +24,8 @@ import java.util.List;
 import qt.qtbutton.model.ListItem;
 
 public class FriendList extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
-    private static final String SOAP_ACTION = "http://tempuri.org/IService1/GetActiveFriends";
-    private static final String SOAP_METHOD_NAME = "GetActiveFriends";
+    private static final String SOAP_ACTION = "http://tempuri.org/IService1/GetNotActiveFriends";
+    private static final String SOAP_METHOD_NAME = "GetNotActiveFriends";
     private static final String URL = Global.URL;
     private static final String NAMESPACE = "http://tempuri.org/";
     public static ArrayList<String> lists = new ArrayList<String>();
@@ -60,6 +61,8 @@ public class FriendList extends AppCompatActivity implements NavigationView.OnNa
         adapter.notifyDataSetChanged();
         lvMain.invalidateViews();
         lvMain.refreshDrawableState();
+        listsResult.clear();
+        lists.clear();
         listsResult = getListFriends();
         for (List<String> result : listsResult) {
             lists.add(result.get(0));
@@ -82,7 +85,10 @@ public class FriendList extends AppCompatActivity implements NavigationView.OnNa
 
         return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
-
+    public void goToAddFriend(View view) {
+        Intent intent = new Intent(FriendList.this, AddFriend.class);
+        startActivity(intent);
+    }
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         if ((item.getTitle().toString()).equals("Друзья")){

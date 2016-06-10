@@ -40,7 +40,8 @@
         android:layout_below="@+id/friendListView"
         android:layout_centerHorizontal="true"
         android:layout_weight="0"
-        android:text="ADD" />
+        android:text="ADD"
+        android:onClick="goToAddFriend"/>
 
 </RelativeLayout>
     </RelativeLayout>

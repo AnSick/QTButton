@@ -11,20 +11,7 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/newFriendName"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="name"
-                android:textAlignment="center"
-                android:singleLine="true"/>
 
-            <EditText
-                android:id="@+id/et_friendName"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="#AFEEEE"
-                android:singleLine="true" />
             <TextView
                 android:id="@+id/newFriendTel"
                 android:layout_width="fill_parent"
@@ -48,7 +35,8 @@
                 android:layout_below="@+id/listView"
                 android:layout_centerHorizontal="true"
                 android:layout_weight="0"
-                android:text="ADD" />
+                android:text="ADD"
+                android:onClick="CreateFriend"/>
         </TableLayout>
 
 </RelativeLayout>
