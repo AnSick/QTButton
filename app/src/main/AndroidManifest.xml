@@ -34,6 +34,8 @@
         <activity android:name=".AddListLines" />
         <activity android:name=".ListPage" />
         <activity android:name=".EditLinePage"></activity>
+        <activity android:name=".AddFriend"></activity>
+        <activity android:name=".FriendList"></activity>
     </application>
 
 </manifest>

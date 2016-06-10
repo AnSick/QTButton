@@ -16,6 +16,7 @@
         android:id="@+id/mainListView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_marginTop="45dp"
         android:layout_weight="1" />
 
@@ -29,4 +30,47 @@
         android:layout_alignParentStart="true"
         android:layout_marginBottom="70dp"
         android:layout_weight="1" />
+
+    <EditText
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_newProductAtList"
+        android:layout_alignTop="@+id/et_numberOfProductAtList"
+        android:hint="New item"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:singleLine="true" />
+
+    <EditText
+        android:id="@+id/et_numberOfProductAtList"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="@+id/et_newProductAtList"
+        android:layout_toRightOf="@+id/et_newProductAtList"
+        android:layout_toEndOf="@+id/et_newProductAtList"
+        android:layout_alignTop="@+id/spinnerAtList"
+        android:singleLine="true" />
+
+    <Spinner
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/spinnerAtList"
+        android:entries="@array/measure"
+        android:layout_alignTop="@+id/btn_addItemAtList"
+        android:layout_alignParentLeft="@+id/et_numberOfProductAtList"
+        android:layout_toRightOf="@+id/et_numberOfProductAtList"
+        android:layout_toEndOf="@+id/et_numberOfProductAtList" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ADD"
+        android:id="@+id/btn_addItemAtList"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="createNewLineAtList" />
 </RelativeLayout>

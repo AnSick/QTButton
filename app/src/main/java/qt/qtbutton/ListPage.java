@@ -348,4 +348,106 @@ public class ListPage extends AppCompatActivity {
             }
         }
     }
+
+    public void createNewLineAtList(View view) {
+        final String SOAP_ACTION = "http://tempuri.org/IService1/AddListLine";
+        final String SOAP_METHOD_NAME = "AddListLine";
+        final String NAMESPACE = "http://tempuri.org/";
+        final String URL = Global.URL;
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                EditText et_productName = (EditText) findViewById(R.id.et_newProductAtList);
+                String productName = String.valueOf(et_productName.getText());
+                SoapObject Request = new SoapObject(NAMESPACE, SOAP_METHOD_NAME);
+                Request.addProperty("tel", Global.tel);
+                Request.addProperty("pass", Global.pass);
+                Request.addProperty("listId", listId);
+                Request.addProperty("productName", productName);
+                SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+                soapEnvelope.dotNet = true;
+
+                soapEnvelope.setAddAdornments(false);
+                soapEnvelope.encodingStyle = SoapSerializationEnvelope.ENC;
+                soapEnvelope.env = SoapSerializationEnvelope.ENV;
+                soapEnvelope.implicitTypes = true;
+                soapEnvelope.setOutputSoapObject(Request);
+                HttpTransportSE aht = new HttpTransportSE(URL);
+                aht.debug = true;
+                Integer lineId = 0;
+                try {
+                    aht.call(SOAP_ACTION, soapEnvelope);
+                    SoapPrimitive responseObject = (SoapPrimitive) soapEnvelope.getResponse();
+                    String str = responseObject.toString();
+                    System.out.println(str);
+                    lineId = Integer.valueOf(str);
+                    System.out.println(lineId);
+                } catch (Exception e) {
+                    Log.i("Check_Soap_Service", "Exception : " + e.toString());
+                    // result = "";
+                }
+                if (lineId != 0) {
+                    addInfoToLineAtList(lineId, productName);
+                }
+            }
+
+        }).start();
+
+    }
+
+    public void addInfoToLineAtList(Integer lineId, String productForLine) {
+        final String SOAP_ACTION = "http://tempuri.org/IService1/UpdateListLines";
+        final String SOAP_METHOD_NAME = "UpdateListLines";
+        final String NAMESPACE = "http://tempuri.org/";
+        final String URL = Global.URL;
+        final Integer line = lineId;
+        final String productLine = productForLine;
+
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                //EditText et_productName = (EditText) findViewById(R.id.et_newProduct);
+                //String productName = String.valueOf(et_productName.getText());
+                System.out.println("I AM UPDATING OUR FUCKING LINE");
+                EditText et_numberOfProduct = (EditText) findViewById(R.id.et_numberOfProductAtList);
+                String numberOfProduct = String.valueOf(et_numberOfProduct.getText());
+                Spinner spinner = (Spinner) findViewById(R.id.spinnerAtList);
+                String category = String.valueOf(spinner.getSelectedItem());
+                SoapObject Request = new SoapObject(NAMESPACE, SOAP_METHOD_NAME);
+                Request.addProperty("tel", Global.tel);
+                Request.addProperty("pass", Global.pass);
+                Request.addProperty("listLineId", line);
+                Request.addProperty("productName", productLine);
+                Request.addProperty("count", numberOfProduct);
+                Request.addProperty("measureTypeName", category);
+                Request.addProperty("comment", "hello");
+                // Request.addProperty("isBought", 0);
+                SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+                soapEnvelope.dotNet = true;
+
+                soapEnvelope.setAddAdornments(false);
+                soapEnvelope.encodingStyle = SoapSerializationEnvelope.ENC;
+                soapEnvelope.env = SoapSerializationEnvelope.ENV;
+                soapEnvelope.implicitTypes = true;
+                soapEnvelope.setOutputSoapObject(Request);
+                HttpTransportSE aht = new HttpTransportSE(URL);
+                aht.debug = true;
+                try {
+                    aht.call(SOAP_ACTION, soapEnvelope);
+
+                } catch (Exception e) {
+                    Log.i("Check_Soap_Service", "Exception : " + e.toString());
+                    // result = "";
+                }
+            }
+
+        }).start();
+        Intent intent = new Intent(ListPage.this, ListPage.class);
+        intent.putExtra("listId", listId);
+        startActivity(intent);
+
+    }
+
 }
