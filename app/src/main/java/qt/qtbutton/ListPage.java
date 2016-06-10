@@ -45,7 +45,7 @@ public class ListPage extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 R.layout.list_product_line, R.id.productFullLine, lists);
         ArrayAdapter<String> adapterDeactivated = new ArrayAdapter<String>(this,
-                R.layout.product_line, R.id.productInfo, listsDeactivated);
+                R.layout.list_inactive_line, R.id.productFullInactiveLine, listsDeactivated);
 
         // присваиваем адаптер списку
         lvMain.setAdapter(adapter);
@@ -262,6 +262,33 @@ public class ListPage extends AppCompatActivity {
         }
     }
 
+    public void onInactiveLineClick(View view) {
+        System.out.println("I entered onInactiveLineClick");
+        if (view instanceof AppCompatTextView) {
+            AppCompatTextView textView = (AppCompatTextView) view;
+            String name = textView.getText().toString();
+            int localId = -1;
+            String localProduct;
+            int localNumber;
+            String localCategory;
+            Log.i("", "clickedOn:    " + name);
+            for (ProductLine result : listsDeactivatedLines) {
+                String superline = result.getProduct() + " " + result.getNumberOfProduct() + " " + result.getCategory();
+                if (superline.equals(name)) {
+                    localId = result.getId();
+                    localProduct = result.getProduct();
+                    localCategory = result.getCategory();
+                    localNumber = result.getNumberOfProduct();
+                    break;
+                }
+            }
+            if (localId != -1) {
+                makeActive(localId);
+                System.out.println("Making active" + localId);
+            }
+        }
+    }
+
     public void makeInactive(int lineId) {
         final String SOAP_ACTION = "http://tempuri.org/IService1/ListLinesBought";
         final String SOAP_METHOD_NAME = "ListLinesBought";
@@ -317,6 +344,61 @@ public class ListPage extends AppCompatActivity {
 
     }
 
+    public void makeActive(int lineId) {
+        final String SOAP_ACTION = "http://tempuri.org/IService1/ListLinesBought";
+        final String SOAP_METHOD_NAME = "ListLinesBought";
+        final String NAMESPACE = "http://tempuri.org/";
+        final String URL = Global.URL;
+        final int ourId = lineId;
+        Thread threadMakeActive =
+                new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        SoapObject Request = new SoapObject(NAMESPACE, SOAP_METHOD_NAME);
+                        Request.addProperty("tel", Global.tel);
+                        Request.addProperty("pass", Global.pass);
+                        Request.addProperty("listLineId", ourId);
+                        Request.addProperty("isBought", false);
+                        SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+                        soapEnvelope.dotNet = true;
+
+                        soapEnvelope.setAddAdornments(false);
+                        soapEnvelope.encodingStyle = SoapSerializationEnvelope.ENC;
+                        soapEnvelope.env = SoapSerializationEnvelope.ENV;
+                        soapEnvelope.implicitTypes = true;
+                        soapEnvelope.setOutputSoapObject(Request);
+                        HttpTransportSE aht = new HttpTransportSE(URL);
+                        aht.debug = true;
+                        try {
+                            aht.call(SOAP_ACTION, soapEnvelope);
+                            SoapPrimitive resultString = (SoapPrimitive) soapEnvelope.getResponse();
+                            // SoapObject result =(SoapObject) soapEnvelope.bodyIn;
+                            //TODO: appropriate parsing and processing routine for resultString
+                            //Log.i("Check_Soap_Service", "resultString -  " + resultString);
+                            // result = Boolean.getBoolean((((SoapPrimitive) soapEnvelope.getResponse()).toString()));
+                            //   SoapObject resultString = (SoapObject) soapEnvelope.getResponse();
+                        } catch (Exception e) {
+                            Log.i("Check_Soap_Service", "Exception : " + e.toString());
+                            // result = "";
+                        }
+
+
+                    }
+                }
+                );
+        threadMakeActive.start();
+        try {
+            threadMakeActive.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Intent intent = new Intent(ListPage.this, ListPage.class);
+        intent.putExtra("listId", listId);
+        startActivity(intent);
+
+    }
+
     public void onLineLongClick(View view) {
         if (view instanceof AppCompatTextView) {
             AppCompatTextView textView = (AppCompatTextView) view;
@@ -354,6 +436,7 @@ public class ListPage extends AppCompatActivity {
         final String SOAP_METHOD_NAME = "AddListLine";
         final String NAMESPACE = "http://tempuri.org/";
         final String URL = Global.URL;
+        Thread threadCreateNewLineAtList =
         new Thread(new Runnable() {
 
             @Override
@@ -392,7 +475,13 @@ public class ListPage extends AppCompatActivity {
                 }
             }
 
-        }).start();
+        });
+        threadCreateNewLineAtList.start();
+        try {
+            threadCreateNewLineAtList.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -403,7 +492,7 @@ public class ListPage extends AppCompatActivity {
         final String URL = Global.URL;
         final Integer line = lineId;
         final String productLine = productForLine;
-
+        Thread threadAddInfoToLineAtList =
         new Thread(new Runnable() {
 
             @Override
@@ -443,7 +532,13 @@ public class ListPage extends AppCompatActivity {
                 }
             }
 
-        }).start();
+        });
+        threadAddInfoToLineAtList.start();
+        try {
+            threadAddInfoToLineAtList.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Intent intent = new Intent(ListPage.this, ListPage.class);
         intent.putExtra("listId", listId);
         startActivity(intent);

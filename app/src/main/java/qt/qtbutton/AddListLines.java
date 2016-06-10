@@ -49,6 +49,7 @@ public class AddListLines extends AppCompatActivity {
         final String SOAP_METHOD_NAME = "AddListLine";
         final String NAMESPACE = "http://tempuri.org/";
         final String URL = Global.URL;
+        Thread threadCreateNewLine =
         new Thread(new Runnable() {
 
             @Override
@@ -87,7 +88,13 @@ public class AddListLines extends AppCompatActivity {
                 }
             }
 
-        }).start();
+        });
+        threadCreateNewLine.start();
+        try {
+            threadCreateNewLine.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -98,7 +105,7 @@ public class AddListLines extends AppCompatActivity {
         final String URL = Global.URL;
         final Integer line = lineId;
         final String productLine = productForLine;
-
+        Thread threadAddInfoToLine =
         new Thread(new Runnable() {
 
             @Override
@@ -138,7 +145,13 @@ public class AddListLines extends AppCompatActivity {
                 }
             }
 
-        }).start();
+        });
+        threadAddInfoToLine.start();
+        try {
+            threadAddInfoToLine.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         lists = getLines();
         Intent intent = new Intent(AddListLines.this, AddListLines.class);
         intent.putExtra("listId", listId);
