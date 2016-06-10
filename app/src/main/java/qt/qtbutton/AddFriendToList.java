@@ -19,11 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 import qt.qtbutton.model.Friend;
 
-import qt.qtbutton.model.ListItem;
-
-public class AddFrienToList extends AppCompatActivity {
-    private static final String SOAP_ACTION = "http://tempuri.org/IService1/GetNotActiveFriends";
-    private static final String SOAP_METHOD_NAME = "GetNotActiveFriends";
+public class AddFriendToList extends AppCompatActivity {
+    private static final String SOAP_ACTION = "http://tempuri.org/IService1/GetActiveFriends";
+    private static final String SOAP_METHOD_NAME = "GetActiveFriends";
     private static final String URL = Global.URL;
     private static final String NAMESPACE = "http://tempuri.org/";
     ArrayList<String> lists = new ArrayList<String>();
@@ -45,7 +43,9 @@ public class AddFrienToList extends AppCompatActivity {
         adapter.notifyDataSetChanged();
         lvMain.invalidateViews();
         lvMain.refreshDrawableState();
+
         listsResult = getListFriends();
+
         for (Friend localResult : listsResult) {
             lists.add(localResult.getName());
         }
@@ -154,8 +154,12 @@ public class AddFrienToList extends AppCompatActivity {
 
     }
     public void goBackToLists(View view){
-        Intent intent = new Intent(AddFrienToList.this, ListsPage.class);
-
+        Intent intent = new Intent(AddFriendToList.this, ListsPage.class);
+        startActivity(intent);
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(AddFriendToList.this, ListsPage.class);
         startActivity(intent);
     }
 }

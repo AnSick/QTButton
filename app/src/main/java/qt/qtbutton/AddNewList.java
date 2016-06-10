@@ -34,7 +34,7 @@ public class AddNewList extends AppCompatActivity {
         final String SOAP_METHOD_NAME = "AddList";
         final String NAMESPACE = "http://tempuri.org/";
         final String URL = Global.URL;
-
+Thread createNewListThread =
         new Thread(new Runnable() {
 
             @Override
@@ -58,10 +58,9 @@ public class AddNewList extends AppCompatActivity {
                 Integer result = 0;
                 try {
                     aht.call(SOAP_ACTION, soapEnvelope);
-                    // result = Integer.getInteger((((SoapPrimitive) soapEnvelope.getResponse()).toString()));
                     SoapPrimitive responseObject = (SoapPrimitive) soapEnvelope.getResponse();
                     if (responseObject == null) {
-                        System.out.println("HELP IM NULL SAVE ME MOMMY");
+                        System.out.println("Null response");
                     } else {
                         String str = responseObject.toString();
                         result = Integer.valueOf(str);
@@ -69,7 +68,6 @@ public class AddNewList extends AppCompatActivity {
                     }
                 } catch (Exception e) {
                     Log.i("Check_Soap_Service", "Exception : " + e.toString());
-                    // result = "";
                 }
                 if ((result != null) && (result != 0)) {
                     Intent intent = new Intent(AddNewList.this, AddListLines.class);
@@ -88,9 +86,13 @@ public class AddNewList extends AppCompatActivity {
                 }
             }
 
-        }).start();
-
-
+        });
+createNewListThread.start();
+        try {
+            createNewListThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }

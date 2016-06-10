@@ -21,11 +21,9 @@ import org.ksoap2.transport.HttpTransportSE;
 import java.util.ArrayList;
 import java.util.List;
 
-import qt.qtbutton.model.ListItem;
-
 public class FriendList extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
-    private static final String SOAP_ACTION = "http://tempuri.org/IService1/GetNotActiveFriends";
-    private static final String SOAP_METHOD_NAME = "GetNotActiveFriends";
+    private static final String SOAP_ACTION = "http://tempuri.org/IService1/GetActiveFriends";
+    private static final String SOAP_METHOD_NAME = "GetActiveFriends";
     private static final String URL = Global.URL;
     private static final String NAMESPACE = "http://tempuri.org/";
     ArrayList<String> lists = new ArrayList<String>();

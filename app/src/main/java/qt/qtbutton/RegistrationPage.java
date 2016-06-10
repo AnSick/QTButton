@@ -25,7 +25,6 @@ public class RegistrationPage extends AppCompatActivity {
     public String numberRegistration, passwordRegistration, nameRegistration;
     private static final String SOAP_ACTION = "http://tempuri.org/IService1/Reg";
     private static final String SOAP_METHOD_NAME = "Reg";
-    //private static final String URL = "http://91.122.171.34:25565/Design_Time_Addresses/WcfServiceLibrary1/Service1";
     private static final String URL = Global.URL;
     private static final String NAMESPACE = "http://tempuri.org/";
 
@@ -50,6 +49,7 @@ public class RegistrationPage extends AppCompatActivity {
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         } else {
+            Thread regThread =
             new Thread(new Runnable() {
 
                 @Override
@@ -66,44 +66,17 @@ public class RegistrationPage extends AppCompatActivity {
                     soapEnvelope.env = SoapSerializationEnvelope.ENV;
                     soapEnvelope.implicitTypes = true;
                     soapEnvelope.setOutputSoapObject(Request);
-
-//                    String result = "false";
                     HttpTransportSE aht = new HttpTransportSE(URL);
                     aht.debug = true;
 
                     try {
                         aht.call(SOAP_ACTION, soapEnvelope);
                         SoapPrimitive resultString = (SoapPrimitive) soapEnvelope.getResponse();
-                        // SoapObject result =(SoapObject) soapEnvelope.bodyIn;
-                        //TODO: appropriate parsing and processing routine for resultString
                         Log.i("Check_Soap_Service", "resultString -  " + resultString);
-                        // result = Boolean.getBoolean((((SoapPrimitive) soapEnvelope.getResponse()).toString()));
-                        //                      result = resultString.toString();
-                        //   System.out.println(result);
                     } catch (Exception e) {
                         Log.i("Check_Soap_Service", "Exception : " + e.toString());
-                        //result = "false";
                     }
 
-/*
-                    Stubber stub = new Stubber();
-                    result = stub.loginStub(numberField, passwordField);
-*/
-                  /*  if (result.equals("true")) {
-                        Intent intent = new Intent(LoginPage.this, ListsPage.class);
-                        startActivity(intent);
-                    } else {
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                Toast toast = Toast.makeText(getApplicationContext(),
-                                        "Incorrect number or password!",
-                                        Toast.LENGTH_LONG);
-                                toast.setGravity(Gravity.CENTER, 0, 0);
-                                toast.show();
-                            }
-                        });
-                    }
-*/
                     runOnUiThread(new Runnable() {
                         public void run() {
                             Toast toast = Toast.makeText(getApplicationContext(),
@@ -116,7 +89,13 @@ public class RegistrationPage extends AppCompatActivity {
                     Intent intent = new Intent(RegistrationPage.this, MainPage.class);
                     startActivity(intent);
                 }
-            }).start();
+            });
+            regThread.start();
+            try {
+                regThread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
         }
     }

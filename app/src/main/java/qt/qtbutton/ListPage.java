@@ -30,7 +30,6 @@ public class ListPage extends AppCompatActivity {
     List<ProductLine> listsLines = new ArrayList<>();
     List<ProductLine> listsDeactivatedLines = new ArrayList<>();
     List<String> listsDeactivated = new ArrayList<String>();
-    //   public static ArrayList<String> result = new ArrayList<String>();
     public static int listId;
 
     @Override
@@ -67,9 +66,6 @@ public class ListPage extends AppCompatActivity {
                 return true;
             }
         });
-        //   adapter.notifyDataSetChanged();
-        // lvMain.invalidateViews();
-        // lvMain.refreshDrawableState();
         listsLines = getLines();
         listsDeactivatedLines = getDeactivatedLines();
 
@@ -83,8 +79,6 @@ public class ListPage extends AppCompatActivity {
         for (String result : lists) {
             System.out.println(result);
         }
-        //  lists = getLines();
-        //    listsDeactivated=getDeactivatedLines();
     }
 
     @Override
@@ -98,7 +92,6 @@ public class ListPage extends AppCompatActivity {
         final String SOAP_METHOD_NAME = "GetNotBoughtListLines";
         final String NAMESPACE = "http://tempuri.org/";
         final String URL = Global.URL;
-        //  final ArrayList<String> localLines = new ArrayList<String>();
         final ArrayList<String> result = new ArrayList<>();
         Thread threadGetLines =
                 new Thread(new Runnable() {
@@ -122,12 +115,6 @@ public class ListPage extends AppCompatActivity {
                         int count = 0;
                         try {
                             aht.call(SOAP_ACTION, soapEnvelope);
-                            //  SoapPrimitive resultString = (SoapPrimitive) soapEnvelope.getResponse();
-                            // SoapObject result =(SoapObject) soapEnvelope.bodyIn;
-                            //TODO: appropriate parsing and processing routine for resultString
-                            //Log.i("Check_Soap_Service", "resultString -  " + resultString);
-                            // result = Boolean.getBoolean((((SoapPrimitive) soapEnvelope.getResponse()).toString()));
-                            //   SoapObject resultString = (SoapObject) soapEnvelope.getResponse();
                             count = ((SoapObject) soapEnvelope.getResponse()).getPropertyCount();
                             for (int i = 0; i < count; i++) {
                                 String str = ((SoapObject) soapEnvelope.getResponse()).getPropertyAsString(i);
@@ -135,7 +122,6 @@ public class ListPage extends AppCompatActivity {
                             }
                         } catch (Exception e) {
                             Log.i("Check_Soap_Service", "Exception : " + e.toString());
-                            // result = "";
                         }
                         for (int i = 0; i < count; i++) {
 
@@ -143,14 +129,6 @@ public class ListPage extends AppCompatActivity {
                             listsLines.add(
                                     new ProductLine(Integer.valueOf(strResult[0]), strResult[1], Integer.valueOf(strResult[2]), strResult[3], strResult[4], strResult[5].startsWith("[Tt]"))
                             );
-
-// StringTokenizer str = new StringTokenizer(result.get(i), "+");
-                            // str.nextToken();
-                            // String wholeLine = str.nextToken() + "  " + str.nextToken() + "  " + str.nextToken();
-
-
-                            // lists.add(wholeLine);
-                            // localLines.add(wholeLine);
                         }
 
                     }
@@ -194,12 +172,6 @@ public class ListPage extends AppCompatActivity {
                         int count = 0;
                         try {
                             aht.call(SOAP_ACTION, soapEnvelope);
-                            //  SoapPrimitive resultString = (SoapPrimitive) soapEnvelope.getResponse();
-                            // SoapObject result =(SoapObject) soapEnvelope.bodyIn;
-                            //TODO: appropriate parsing and processing routine for resultString
-                            //Log.i("Check_Soap_Service", "resultString -  " + resultString);
-                            // result = Boolean.getBoolean((((SoapPrimitive) soapEnvelope.getResponse()).toString()));
-                            //   SoapObject resultString = (SoapObject) soapEnvelope.getResponse();
                             count = ((SoapObject) soapEnvelope.getResponse()).getPropertyCount();
                             for (int i = 0; i < count; i++) {
                                 String str = ((SoapObject) soapEnvelope.getResponse()).getPropertyAsString(i);
@@ -207,20 +179,12 @@ public class ListPage extends AppCompatActivity {
                             }
                         } catch (Exception e) {
                             Log.i("Check_Soap_Service", "Exception : " + e.toString());
-                            // result = "";
                         }
                         for (int i = 0; i < count; i++) {
-                            //StringTokenizer str = new StringTokenizer(result.get(i), "+");
-                            //str.nextToken();
-                            //String wholeLine = str.nextToken() + "  " + str.nextToken() + "  " + str.nextToken();
-
                             String[] strResult = result.get(i).split("\\+");
                             listsDeactivatedLines.add(
                                     new ProductLine(Integer.valueOf(strResult[0]), strResult[1], Integer.valueOf(strResult[2]), strResult[3], strResult[4], strResult[5].startsWith("[Tt]"))
                             );
-
-                            // lists.add(wholeLine);
-                            //localLines.add(wholeLine);
                         }
 
                     }
@@ -318,17 +282,9 @@ public class ListPage extends AppCompatActivity {
                         try {
                             aht.call(SOAP_ACTION, soapEnvelope);
                             SoapPrimitive resultString = (SoapPrimitive) soapEnvelope.getResponse();
-                            // SoapObject result =(SoapObject) soapEnvelope.bodyIn;
-                            //TODO: appropriate parsing and processing routine for resultString
-                            //Log.i("Check_Soap_Service", "resultString -  " + resultString);
-                            // result = Boolean.getBoolean((((SoapPrimitive) soapEnvelope.getResponse()).toString()));
-                            //   SoapObject resultString = (SoapObject) soapEnvelope.getResponse();
                         } catch (Exception e) {
                             Log.i("Check_Soap_Service", "Exception : " + e.toString());
-                            // result = "";
                         }
-
-
                     }
                 }
                 );
@@ -373,17 +329,9 @@ public class ListPage extends AppCompatActivity {
                         try {
                             aht.call(SOAP_ACTION, soapEnvelope);
                             SoapPrimitive resultString = (SoapPrimitive) soapEnvelope.getResponse();
-                            // SoapObject result =(SoapObject) soapEnvelope.bodyIn;
-                            //TODO: appropriate parsing and processing routine for resultString
-                            //Log.i("Check_Soap_Service", "resultString -  " + resultString);
-                            // result = Boolean.getBoolean((((SoapPrimitive) soapEnvelope.getResponse()).toString()));
-                            //   SoapObject resultString = (SoapObject) soapEnvelope.getResponse();
                         } catch (Exception e) {
                             Log.i("Check_Soap_Service", "Exception : " + e.toString());
-                            // result = "";
                         }
-
-
                     }
                 }
                 );
@@ -468,7 +416,6 @@ public class ListPage extends AppCompatActivity {
                     System.out.println(lineId);
                 } catch (Exception e) {
                     Log.i("Check_Soap_Service", "Exception : " + e.toString());
-                    // result = "";
                 }
                 if (lineId != 0) {
                     addInfoToLineAtList(lineId, productName);
@@ -497,9 +444,6 @@ public class ListPage extends AppCompatActivity {
 
             @Override
             public void run() {
-                //EditText et_productName = (EditText) findViewById(R.id.et_newProduct);
-                //String productName = String.valueOf(et_productName.getText());
-                System.out.println("I AM UPDATING OUR FUCKING LINE");
                 EditText et_numberOfProduct = (EditText) findViewById(R.id.et_numberOfProductAtList);
                 String numberOfProduct = String.valueOf(et_numberOfProduct.getText());
                 Spinner spinner = (Spinner) findViewById(R.id.spinnerAtList);
@@ -512,7 +456,6 @@ public class ListPage extends AppCompatActivity {
                 Request.addProperty("count", numberOfProduct);
                 Request.addProperty("measureTypeName", category);
                 Request.addProperty("comment", "hello");
-                // Request.addProperty("isBought", 0);
                 SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
                 soapEnvelope.dotNet = true;
 
@@ -528,7 +471,6 @@ public class ListPage extends AppCompatActivity {
 
                 } catch (Exception e) {
                     Log.i("Check_Soap_Service", "Exception : " + e.toString());
-                    // result = "";
                 }
             }
 

@@ -54,13 +54,11 @@ public class EditLinePage extends AppCompatActivity {
         final String NAMESPACE = "http://tempuri.org/";
         final String URL = Global.URL;
         final Integer line = lineId;
-
+        Thread threadEditLine =
         new Thread(new Runnable() {
 
             @Override
             public void run() {
-                //EditText et_productName = (EditText) findViewById(R.id.et_newProduct);
-                //String productName = String.valueOf(et_productName.getText());
                 System.out.println("I AM UPDATING OUR FUCKING LINE");
                 EditText et_product = (EditText) findViewById(R.id.et_editProduct);
                 String localProduct = String.valueOf(et_product.getText());
@@ -96,10 +94,22 @@ public class EditLinePage extends AppCompatActivity {
                 }
             }
 
-        }).start();
+        });
+        threadEditLine.start();
+        try {
+            threadEditLine.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Intent intent = new Intent(EditLinePage.this, ListPage.class);
         intent.putExtra("listId", listId);
         startActivity(intent);
 
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(EditLinePage.this, ListPage.class);
+        intent.putExtra("listId", listId);
+        startActivity(intent);
     }
 }

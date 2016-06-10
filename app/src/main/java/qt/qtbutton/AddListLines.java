@@ -21,13 +21,13 @@ import java.util.StringTokenizer;
 
 public class AddListLines extends AppCompatActivity {
     public static ArrayList<String> lists = new ArrayList<String>();
-    //   public static ArrayList<String> result = new ArrayList<String>();
     public static int listId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_list_lines);
+       // lists.clear();
         listId = getIntent().getExtras().getInt("listId");
         ListView lvMain = (ListView) findViewById(R.id.productListView);
 
@@ -81,7 +81,6 @@ public class AddListLines extends AppCompatActivity {
                     System.out.println(lineId);
                 } catch (Exception e) {
                     Log.i("Check_Soap_Service", "Exception : " + e.toString());
-                    // result = "";
                 }
                 if (lineId != 0) {
                     addInfoToLine(lineId, productName);
@@ -110,9 +109,6 @@ public class AddListLines extends AppCompatActivity {
 
             @Override
             public void run() {
-                //EditText et_productName = (EditText) findViewById(R.id.et_newProduct);
-                //String productName = String.valueOf(et_productName.getText());
-                System.out.println("I AM UPDATING OUR FUCKING LINE");
                 EditText et_numberOfProduct = (EditText) findViewById(R.id.et_numberOfProduct);
                 String numberOfProduct = String.valueOf(et_numberOfProduct.getText());
                 Spinner spinner = (Spinner) findViewById(R.id.spinner);
@@ -125,7 +121,6 @@ public class AddListLines extends AppCompatActivity {
                 Request.addProperty("count", numberOfProduct);
                 Request.addProperty("measureTypeName", category);
                 Request.addProperty("comment", "hello");
-                // Request.addProperty("isBought", 0);
                 SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
                 soapEnvelope.dotNet = true;
 
@@ -141,7 +136,6 @@ public class AddListLines extends AppCompatActivity {
 
                 } catch (Exception e) {
                     Log.i("Check_Soap_Service", "Exception : " + e.toString());
-                    // result = "";
                 }
             }
 
@@ -166,6 +160,7 @@ public class AddListLines extends AppCompatActivity {
         final String URL = Global.URL;
         final ArrayList<String> localLines = new ArrayList<String>();
         final ArrayList<String> result = new ArrayList<>();
+        Thread addListLineThread =
         new Thread(new Runnable() {
 
             @Override
@@ -187,12 +182,6 @@ public class AddListLines extends AppCompatActivity {
                 int count = 0;
                 try {
                     aht.call(SOAP_ACTION, soapEnvelope);
-                    //  SoapPrimitive resultString = (SoapPrimitive) soapEnvelope.getResponse();
-                    // SoapObject result =(SoapObject) soapEnvelope.bodyIn;
-                    //TODO: appropriate parsing and processing routine for resultString
-                    //Log.i("Check_Soap_Service", "resultString -  " + resultString);
-                    // result = Boolean.getBoolean((((SoapPrimitive) soapEnvelope.getResponse()).toString()));
-                    //   SoapObject resultString = (SoapObject) soapEnvelope.getResponse();
                     count = ((SoapObject) soapEnvelope.getResponse()).getPropertyCount();
                     for (int i = 0; i < count; i++) {
                         String str = ((SoapObject) soapEnvelope.getResponse()).getPropertyAsString(i);
@@ -200,43 +189,35 @@ public class AddListLines extends AppCompatActivity {
                     }
                 } catch (Exception e) {
                     Log.i("Check_Soap_Service", "Exception : " + e.toString());
-                    // result = "";
                 }
                 for (int i = 0; i < count; i++) {
                     StringTokenizer str = new StringTokenizer(result.get(i), "+");
                     str.nextToken();
                     String wholeLine = str.nextToken() + "  " + str.nextToken() + "  " + str.nextToken();
-
-
-                    // lists.add(wholeLine);
                     localLines.add(wholeLine);
                 }
 
             }
-        }).start();
-
+        });
+addListLineThread.start();
+        try {
+            addListLineThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return localLines;
     }
 
     public void createListFinal(View view) {
-        Intent intent = new Intent(AddListLines.this, AddFrienToList.class);
+        Intent intent = new Intent(AddListLines.this, AddFriendToList.class);
         intent.putExtra("listId", listId);
         startActivity(intent);
     }
 
-    public void refresh(View view) {          //refresh is onClick name given to the button
-        createNewLine(view);
-        onRestart();
-    }
-
     @Override
-    protected void onRestart() {
-
-        // TODO Auto-generated method stub
-        super.onRestart();
-        Intent i = new Intent(AddListLines.this, AddListLines.class);  //your class
-        startActivity(i);
-        finish();
-
+    public void onBackPressed() {
+        Intent intent = new Intent(AddListLines.this, ListsPage.class);
+        startActivity(intent);
     }
+
 }

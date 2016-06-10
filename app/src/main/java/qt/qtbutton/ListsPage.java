@@ -5,16 +5,13 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
@@ -24,20 +21,10 @@ import org.ksoap2.transport.HttpTransportSE;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import qt.qtbutton.model.ListItem;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
 import android.support.design.widget.NavigationView;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.Toast;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 
 /**
  * Created by Anna on 01.06.2016.
@@ -50,7 +37,6 @@ public class ListsPage extends AppCompatActivity  implements NavigationView.OnNa
     public static ArrayList<Integer> ids = new ArrayList<Integer>();
     private static final String SOAP_ACTION = "http://tempuri.org/IService1/GetActiveLists";
     private static final String SOAP_METHOD_NAME = "GetActiveLists";
-    //  private static final String URL = "http://91.122.171.34:25565/Design_Time_Addresses/WcfServiceLibrary1/Service1";
     private static final String URL = Global.URL;
     private static final String NAMESPACE = "http://tempuri.org/";
     public ArrayAdapter<String> adapter;
@@ -102,7 +88,6 @@ public class ListsPage extends AppCompatActivity  implements NavigationView.OnNa
                 return true;
             }
         });
-        //  adapter.getPosition(lists.);
 
     }
     @Override
@@ -168,12 +153,6 @@ public class ListsPage extends AppCompatActivity  implements NavigationView.OnNa
                 int count = 0;
                 try {
                     aht.call(SOAP_ACTION, soapEnvelope);
-                    //  SoapPrimitive resultString = (SoapPrimitive) soapEnvelope.getResponse();
-                    // SoapObject result =(SoapObject) soapEnvelope.bodyIn;
-                    //TODO: appropriate parsing and processing routine for resultString
-                    //Log.i("Check_Soap_Service", "resultString -  " + resultString);
-                    // result = Boolean.getBoolean((((SoapPrimitive) soapEnvelope.getResponse()).toString()));
-                    //   SoapObject resultString = (SoapObject) soapEnvelope.getResponse();
                     count = ((SoapObject) soapEnvelope.getResponse()).getPropertyCount();
                     for (int i = 0; i < count; i++) {
                         String str = ((SoapObject) soapEnvelope.getResponse()).getPropertyAsString(i);
@@ -181,7 +160,6 @@ public class ListsPage extends AppCompatActivity  implements NavigationView.OnNa
                     }
                 } catch (Exception e) {
                     Log.i("Check_Soap_Service", "Exception : " + e.toString());
-                    // result = "";
                 }
 
                 for (int i = 0; i < count; i++) {
@@ -189,19 +167,9 @@ public class ListsPage extends AppCompatActivity  implements NavigationView.OnNa
                     listsResult.add(
                             new ListItem(Integer.valueOf(strResult[0]), strResult[1], strResult[2].startsWith("[Tt]"))
                     );
-
-                    /*StringTokenizer str = new StringTokenizer(result.get(i), "+");
-                    Integer id;
-                    id = Integer.valueOf(str.nextToken());
-                    ids.add(id);
-                    String name = str.nextToken();
-
-                    listsResult.add(name);
-                */
                 }
             }
         });
-        //.start()
         getListThread.start();
         try {
             getListThread.join();
@@ -290,17 +258,9 @@ public class ListsPage extends AppCompatActivity  implements NavigationView.OnNa
                         try {
                             aht.call(SOAP_ACTION, soapEnvelope);
                             SoapPrimitive resultString = (SoapPrimitive) soapEnvelope.getResponse();
-                            // SoapObject result =(SoapObject) soapEnvelope.bodyIn;
-                            //TODO: appropriate parsing and processing routine for resultString
-                            //Log.i("Check_Soap_Service", "resultString -  " + resultString);
-                            // result = Boolean.getBoolean((((SoapPrimitive) soapEnvelope.getResponse()).toString()));
-                            //   SoapObject resultString = (SoapObject) soapEnvelope.getResponse();
                         } catch (Exception e) {
                             Log.i("Check_Soap_Service", "Exception : " + e.toString());
-                            // result = "";
                         }
-
-
                     }
                 }
                 );

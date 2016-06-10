@@ -28,15 +28,8 @@ public class LoginPage extends AppCompatActivity {
     public String passwordField;
     private static final String SOAP_ACTION = "http://tempuri.org/IService1/AuthIn";
     private static final String SOAP_METHOD_NAME = "AuthIn";
-    // private static final String URL = "http://91.122.171.34:25565/Design_Time_Addresses/WcfServiceLibrary1/Service1";
     private static final String URL = Global.URL;
     private static final String NAMESPACE = "http://tempuri.org/";
-
-    /* private static final String SOAP_ACTION = "http://tempuri.org/IService1/GetDataInt";
-      private static final String SOAP_METHOD_NAME = "GetDataInt";
-      private static final String URL = "http://91.122.171.34:25565/Design_Time_Addresses/WcfServiceLibrary1/Service1";
-      private static final String NAMESPACE = "http://tempuri.org/";
-      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +49,7 @@ public class LoginPage extends AppCompatActivity {
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         } else {
+            Thread loginThread =
             new Thread(new Runnable() {
 
                 @Override
@@ -79,10 +73,6 @@ public class LoginPage extends AppCompatActivity {
                 try {
                     aht.call(SOAP_ACTION, soapEnvelope);
                     SoapPrimitive resultString = (SoapPrimitive) soapEnvelope.getResponse();
-                   // SoapObject result =(SoapObject) soapEnvelope.bodyIn;
-                    //TODO: appropriate parsing and processing routine for resultString
-                    //Log.i("Check_Soap_Service", "resultString -  " + resultString);
-                    // result = Boolean.getBoolean((((SoapPrimitive) soapEnvelope.getResponse()).toString()));
                     result = resultString.toString();
                     System.out.println(result);
                 } catch (Exception e) {
@@ -90,10 +80,6 @@ public class LoginPage extends AppCompatActivity {
                     result = "false";
                 }
 
-/*
-                    Stubber stub = new Stubber();
-                    result = stub.loginStub(numberField, passwordField);
-*/
                     if (result.equals("true")) {
                         Global.tel = numberField;
                         Global.pass = passwordField;
@@ -110,10 +96,14 @@ public class LoginPage extends AppCompatActivity {
                             }
                         });
                     }
-
-
                 }
-            }).start();
+            });
+            loginThread.start();
+            try {
+                loginThread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
         }
     }

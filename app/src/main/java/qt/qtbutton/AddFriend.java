@@ -4,12 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
@@ -32,7 +28,7 @@ public class AddFriend extends AppCompatActivity {
         final String SOAP_METHOD_NAME = "AddFriend";
         final String NAMESPACE = "http://tempuri.org/";
         final String URL = Global.URL;
-
+Thread createFriendThread =
         new Thread(new Runnable() {
 
             @Override
@@ -57,17 +53,23 @@ public class AddFriend extends AppCompatActivity {
                 boolean done;
                 try {
                     aht.call(SOAP_ACTION, soapEnvelope);
-                    SoapPrimitive responseObject = (SoapPrimitive) soapEnvelope.getResponse();
-
                 } catch (Exception e) {
                     Log.i("Check_Soap_Service", "Exception : " + e.toString());
                 }
                     Intent intent = new Intent(AddFriend.this, FriendList.class);
                     startActivity(intent);
             }
-
-        }).start();
-
-
+        });
+        createFriendThread.start();
+        try {
+            createFriendThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(AddFriend.this, ListsPage.class);
+        startActivity(intent);
     }
 }
