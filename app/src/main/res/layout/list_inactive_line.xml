@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:text="@+id/productFullInactiveLine"
+        android:background="#12808E"
         android:clickable="true"
         android:onClick="onInactiveLineClick" />
 
