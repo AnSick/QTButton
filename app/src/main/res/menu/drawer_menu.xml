@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="none">
         <item android:id="@+id/lists"
-            android:title="@string/NavigationMenuList" />
+            android:title="Списки" />
         <item android:id="@+id/friends"
             android:title="@string/NavigationMenuFriends" />
         <item android:id="@+id/groups"
-            android:title="@string/NavigationMenuGroups" />
+            android:title="Выход" />
     </group>
 </menu>
