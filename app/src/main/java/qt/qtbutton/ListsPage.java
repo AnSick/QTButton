@@ -125,8 +125,18 @@ public class ListsPage extends AppCompatActivity  implements NavigationView.OnNa
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        Toast.makeText(getApplicationContext(), item.getTitle().toString(), Toast.LENGTH_SHORT).show();
-
+        if ((item.getTitle().toString()).equals("Друзья")){
+            Intent intent = new Intent(ListsPage.this, FriendList.class);
+            startActivity(intent);
+        }
+        if ((item.getTitle().toString()).equals("Списки")) {
+            Intent intent = new Intent(ListsPage.this, ListsPage.class);
+            startActivity(intent);
+        }
+        if ((item.getTitle().toString()).equals("Выход")) {
+            Intent intent = new Intent(ListsPage.this, MainPage.class);
+            startActivity(intent);
+        }
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawerLayout != null) {
             drawerLayout.closeDrawer(GravityCompat.START);
