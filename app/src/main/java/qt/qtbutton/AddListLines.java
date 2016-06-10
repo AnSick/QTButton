@@ -219,7 +219,8 @@ public class AddListLines extends AppCompatActivity {
     }
 
     public void createListFinal(View view) {
-        Intent intent = new Intent(AddListLines.this, ListsPage.class);
+        Intent intent = new Intent(AddListLines.this, AddFrienToList.class);
+        intent.putExtra("listId", listId);
         startActivity(intent);
     }
 

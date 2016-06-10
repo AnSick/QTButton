@@ -2,11 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <TextView
-        android:id="@+id/friendInfo"
+        android:id="@+id/friendInListInfo"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:text="@+id/friendInfo"/>
-
+        android:text="@+id/friendInfo"
+        android:onClick="onFriendItemClick"/>
 </LinearLayout>

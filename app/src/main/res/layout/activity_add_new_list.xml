@@ -23,28 +23,6 @@
             android:singleLine="true" />
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="73dp">
-
-            <EditText
-                android:id="@+id/friend_in_list"
-                android:hint="Friends coming next"
-                android:layout_width="224dp"
-                android:layout_height="36dp"
-                android:background="#AFEEEE"
-                android:singleLine="true" />
-
-            <Button
-                android:id="@+id/add_new_friend_to_list"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="ADD" />
-
-
-        </LinearLayout>
-
         <Button
             android:id="@+id/button1"
             android:layout_width="wrap_content"
