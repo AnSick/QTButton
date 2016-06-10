@@ -322,9 +322,9 @@ public class ListPage extends AppCompatActivity {
             AppCompatTextView textView = (AppCompatTextView) view;
             String name = textView.getText().toString();
             int localId = -1;
-            String localProduct;
-            int localNumber;
-            String localCategory;
+            String localProduct = null;
+            String localNumber = null;
+            String localCategory = null;
             Log.i("", "clickedOn:    " + name);
             for (ProductLine result : listsLines) {
                 String superline = result.getProduct() + " " + result.getNumberOfProduct() + " " + result.getCategory();
@@ -332,15 +332,17 @@ public class ListPage extends AppCompatActivity {
                     localId = result.getId();
                     localProduct = result.getProduct();
                     localCategory = result.getCategory();
-                    localNumber = result.getNumberOfProduct();
+                    localNumber = String.valueOf(result.getNumberOfProduct());
                     break;
                 }
             }
             if (localId != -1) {
-                Intent intent = new Intent(ListPage.this, ListPage.class);
+                Intent intent = new Intent(ListPage.this, EditLinePage.class);
+                intent.putExtra("listId", listId);
                 intent.putExtra("lineId", localId);
-                
-
+                intent.putExtra("productName", localProduct);
+                intent.putExtra("numberOfProduct", localNumber);
+                intent.putExtra("category", localCategory);
                 startActivity(intent);
 
             }

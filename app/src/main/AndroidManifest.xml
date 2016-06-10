@@ -32,7 +32,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AddNewList" />
         <activity android:name=".AddListLines" />
-        <activity android:name=".ListPage"></activity>
+        <activity android:name=".ListPage" />
+        <activity android:name=".EditLinePage"></activity>
     </application>
 
 </manifest>
